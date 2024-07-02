@@ -1,0 +1,13 @@
+{
+  "endOfLine": "lf",
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "printWidth": 100,
+  "arrowParens": "avoid",
+  "importOrderSeparation": true,
+  "importOrderParserPlugins" : ["jsx", "typescript", "classProperties", "decorators-legacy"]
+}
+  

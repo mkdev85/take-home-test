@@ -7,7 +7,7 @@ import cors from 'cors';
 import initRoutes from './routes';
 
 import { AppDataSource } from './utils/data-source';
-import CreateUser from './seeder/createUser';
+import CreateUser from './seeders/createUser';
 
 const app = express();
 const PORT = process.env.APP_PORT;

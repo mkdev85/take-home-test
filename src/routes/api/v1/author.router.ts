@@ -7,4 +7,6 @@ const authorRouter = express.Router(args);
 
 authorRouter.route('/').post(authorsController.CreateAuthor);
 
+authorRouter.route('/:authorId').delete(authorsController.DeleteAuthor);
+
 export { authorRouter };

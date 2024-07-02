@@ -7,9 +7,9 @@ import {
   JoinColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-  
+
 import { Book } from './books';
-  
+
 @Entity('borrowrecords')
 export class BorrowRecord {
   @PrimaryGeneratedColumn('uuid')
@@ -24,7 +24,7 @@ export class BorrowRecord {
   @Column({ nullable: false, type: 'date' })
   returnDate: string;
 
-  @OneToOne((type) => Book)
+  @OneToOne(type => Book)
   @JoinColumn()
   bookId: Book;
 
@@ -34,4 +34,3 @@ export class BorrowRecord {
   @UpdateDateColumn()
   updated_date: Date;
 }
-  

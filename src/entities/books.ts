@@ -6,9 +6,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-  
+
 import { Author } from './authors';
-  
+
 @Entity('books')
 export class Book {
   @PrimaryGeneratedColumn('uuid')
@@ -34,4 +34,3 @@ export class Book {
   @UpdateDateColumn()
   updated_date: Date;
 }
-  

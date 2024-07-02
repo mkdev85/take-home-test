@@ -20,7 +20,7 @@ export class Author {
   @Column({ nullable: false, type: 'varchar' })
   bio: string;
 
-  @Column({ nullable: false, type: 'date'})
+  @Column({ nullable: false, type: 'date' })
   birthdate: string;
 
   @OneToMany(type => Book, book => book.author)

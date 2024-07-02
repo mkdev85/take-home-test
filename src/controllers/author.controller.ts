@@ -1,6 +1,7 @@
 import type { Response } from 'express';
 
 import CreateAuthorService from 'src/services/author/createAuthor';
+import DeleteAuthorService from 'src/services/author/deleteAuthor';
 
 import { sendResponse } from 'src/utils/responseHandler';
 
@@ -13,36 +14,21 @@ class TodosController {
       parameters: {
         name: request.body.name,
         bio: request.body.bio,
-        birthDate: request.body.birthDate
+        birthDate: request.body.birthDate,
       },
       response,
     });
   }
 
-  // static async UpdateTodo(request: CustomRequest, response: Response) {
-  //   sendResponse({
-  //     service: UpdateTodoService,
-  //     parameters: {
-  //       status: request.body.status,
-  //       description: request.body.description,
-  //       title: request.body.title,
-  //       todoId: request.params.todoId,
-  //       userId: request.loggedInUserId,
-  //     },
-  //     response,
-  //   });
-  // }
-
-  // static async DeleteTodo(request: CustomRequest, response: Response) {
-  //   sendResponse({
-  //     service: DeleteTodoService,
-  //     parameters: {
-  //       todoId: request.params.todoId,
-  //       userId: request.loggedInUserId,
-  //     },
-  //     response,
-  //   });
-  // }
+  static async DeleteAuthor(request: CustomRequest, response: Response) {
+    sendResponse({
+      service: DeleteAuthorService,
+      parameters: {
+        authorId: request.params.authorId,
+      },
+      response,
+    });
+  }
 }
 
 export default TodosController;

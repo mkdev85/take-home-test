@@ -1,13 +1,17 @@
+import { ILike } from 'typeorm';
 import Joi from 'joi';
 
 import { Author } from 'src/entities/authors';
 
 import { AppDataSource } from 'src/utils/data-source';
-import { INTERNAL_SERVER_ERROR, AUTHOR_NAME_ALREADY_EXIST, INVALID_PARAMETER } from 'src/utils/constants';
+import {
+  INTERNAL_SERVER_ERROR,
+  AUTHOR_NAME_ALREADY_EXIST,
+  INVALID_PARAMETER,
+} from 'src/utils/constants';
 
 import type { ServiceResponseReturnType } from 'src/types';
 import { fieldsValidator } from 'src/utils/methodHelper';
-import { ILike } from 'typeorm';
 
 const CreateAuthorSchema = Joi.object({
   birthDate: Joi.date().raw().required(),
@@ -42,10 +46,10 @@ class CreateAuthorService {
 
       const authorData = await AuthorRepository.findOne({
         where: {
-          name: ILike(name)
-        }
+          name: ILike(name),
+        },
       });
-      
+
       if (authorData && authorData.name) {
         return [
           {

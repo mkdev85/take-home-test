@@ -10,7 +10,7 @@ import {
   
 import { Book } from './books';
   
-@Entity('books')
+@Entity('borrowrecords')
 export class BorrowRecord {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -24,9 +24,9 @@ export class BorrowRecord {
   @Column({ nullable: false, type: 'date' })
   returnDate: string;
 
-  // @OneToOne((type) => Book)
-  // @JoinColumn()
-  // bookId: Book;
+  @OneToOne((type) => Book)
+  @JoinColumn()
+  bookId: Book;
 
   @CreateDateColumn()
   created_date: Date;

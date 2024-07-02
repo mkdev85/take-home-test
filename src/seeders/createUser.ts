@@ -1,4 +1,4 @@
-import { User } from 'src/entities/user';
+import { User } from 'src/entities/users';
 import { AppDataSource } from 'src/utils/data-source';
 
 const createUser = async () => {

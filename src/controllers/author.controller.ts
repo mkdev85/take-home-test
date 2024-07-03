@@ -17,7 +17,7 @@ class AuthorsController {
       parameters: {
         pageNumber: Number(request.query.page_number) || 1,
         pageSize: Number(request.query.page_size) || 20,
-        searchByTitle: request.query.search_by_title,
+        searchByName: request.query.search_by_name,
         sortByDate: request.query.sort_by_Date,
       },
       response,
@@ -60,6 +60,7 @@ class AuthorsController {
     sendResponse({
       service: UpdateAuthorService,
       parameters: {
+        authorId: request.params.authorId,
         name: request.body.name,
         bio: request.body.bio,
         birthDate: request.body.birthDate,

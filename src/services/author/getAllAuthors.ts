@@ -13,22 +13,22 @@ import { Brackets } from 'typeorm';
 interface IGetAllAuthorsServiceParams {
   pageNumber: number;
   pageSize: number;
-  searchByTitle?: string;
+  searchByName?: string;
   sortByDate?: string;
 }
 
 class GetAllAuthorsService {
   static async run(parameters: IGetAllAuthorsServiceParams): ServiceResponseReturnType {
     try {
-      const { pageNumber, pageSize, searchByTitle, sortByDate } = parameters;
+      const { pageNumber, pageSize, searchByName, sortByDate } = parameters;
 
       const authorQuery = AppDataSource.getRepository(Author).createQueryBuilder('author');
 
-      if (searchByTitle?.trim()) {
+      if (searchByName?.trim()) {
         authorQuery.andWhere(
           new Brackets(qb => {
             qb.where('author.name ILike :search', {
-              search: `%${searchByTitle}%`,
+              search: `%${searchByName}%`,
             });
           }),
         );
@@ -46,7 +46,7 @@ class GetAllAuthorsService {
         .take(pageSize)
         .getManyAndCount();
 
-      return [null, { data: { authors, count, pageNumber, pageSize, sortByDate, searchByTitle } }];
+      return [null, { data: { authors, count, pageNumber, pageSize, sortByDate, searchByName } }];
     } catch (error) {
       console.log('Error while fetching all author items', error);
       return [{ errorType: INTERNAL_SERVER_ERROR }];

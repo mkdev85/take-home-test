@@ -64,12 +64,12 @@ class CreateAuthorService {
       author.birthdate = birthDate;
       author.name = name;
 
-      await AuthorRepository.save(author);
+      const newAuthorData = await AuthorRepository.save(author);
 
       return [
         null,
         {
-          data: { birthDate, name, bio },
+          data: { birthDate, name, bio, id: newAuthorData.id },
           message: `Author '${author.name}' successfully created!`,
         },
       ];

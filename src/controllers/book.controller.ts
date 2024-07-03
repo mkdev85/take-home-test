@@ -8,6 +8,7 @@ import { sendResponse } from 'src/utils/responseHandler';
 
 import type { CustomRequest } from 'src/types';
 import GetAllBoooksService from 'src/services/book/getAllBooks';
+import UpdateBookService from 'src/services/book/updateBook';
 
 class BooksController {
   static async GetBook(request: CustomRequest, response: Response) {
@@ -55,6 +56,20 @@ class BooksController {
       service: DeleteBookService,
       parameters: {
         bookId: request.params.bookId,
+      },
+      response,
+    });
+  }
+
+  static async UpdateBook(request: CustomRequest, response: Response) {
+    sendResponse({
+      service: UpdateBookService,
+      parameters: {
+        publishedYear: request.body.publishedYear,
+        title: request.body.title,
+        genre: request.body.genre,
+        bookId: request.params.bookId,
+        availableCopies: request.body.availableCopies,
       },
       response,
     });

@@ -70,12 +70,12 @@ class GetAllBoooksService {
         });
       }
 
-      const [authors, count] = await bookQuery
+      const [books, count] = await bookQuery
         .skip((pageNumber - 1) * pageSize)
         .take(pageSize)
         .getManyAndCount();
 
-      return [null, { data: { authors, count, pageNumber, pageSize, sortByDate } }];
+      return [null, { data: { books, count, pageNumber, pageSize, sortByDate } }];
     } catch (error) {
       console.log('Error while fetching all book items', error);
       return [{ errorType: INTERNAL_SERVER_ERROR }];

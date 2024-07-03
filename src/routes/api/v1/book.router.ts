@@ -11,6 +11,8 @@ bookRouter.route('/').post(bookController.CreateBook);
 
 bookRouter.route('/:bookId').get(bookController.GetBook);
 
+bookRouter.route('/:bookId').put(bookController.UpdateBook);
+
 bookRouter.route('/:bookId').delete(bookController.DeleteBook);
 
 export { bookRouter };

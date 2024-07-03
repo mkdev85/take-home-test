@@ -49,7 +49,7 @@ class CreateBookService {
       const authorData = await AuthorRepository.findOne({
         where: {
           id: authorId,
-        }
+        },
       });
 
       if (!authorData?.name) {
@@ -73,12 +73,12 @@ class CreateBookService {
         book.availableCopies = availableCopies;
       }
 
-      await BookRepository.save(book);
+      const newBookData = await BookRepository.save(book);
 
       return [
         null,
         {
-          data: { title, genre, publishedYear },
+          data: { title, genre, publishedYear, id: newBookData.id },
           message: `Book '${title}' has been successfully created!`,
         },
       ];

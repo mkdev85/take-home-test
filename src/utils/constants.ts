@@ -5,7 +5,7 @@ export const NOT_FOUND = 'NOT_FOUND';
 
 export const BAD_DATA = 'BAD_DATA';
 
-export const INVALID_AUTHOR_ID = 'Author Id is not valid';
+export const BOOK_NOT_FOUND = 'Book not found';
 export const INVALID_BOOK_ID = 'Book Id is not valid';
 
 export const INVALID_USER = 'Invalid User!';
@@ -13,6 +13,7 @@ export const UNAUTHORIZED_USER_MESSAGE = 'You are not authorized!';
 export const INVALID_PARAMETER_MSG = 'Fields are not valid';
 export const TOKEN_EXPIRED = 'Token in expired!';
 
+export const INVALID_AUTHOR_ID = 'Author Id is not valid';
 export const AUTHOR_NAME_ALREADY_EXIST = 'Author name is already exist';
 export const AUTHOR_NOT_FOUND = 'Author not found';
 

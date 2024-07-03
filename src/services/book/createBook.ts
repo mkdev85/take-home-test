@@ -4,11 +4,7 @@ import { Author } from 'src/entities/authors';
 import { Book } from 'src/entities/books';
 
 import { AppDataSource } from 'src/utils/data-source';
-import {
-  INTERNAL_SERVER_ERROR,
-  INVALID_PARAMETER,
-  INVALID_AUTHOR_ID,
-} from 'src/utils/constants';
+import { INTERNAL_SERVER_ERROR, INVALID_PARAMETER, INVALID_AUTHOR_ID } from 'src/utils/constants';
 
 import type { ServiceResponseReturnType } from 'src/types';
 import { fieldsValidator } from 'src/utils/methodHelper';
@@ -18,7 +14,7 @@ const CreateBookSchema = Joi.object({
   title: Joi.string().trim().required(),
   genre: Joi.string().trim().required(),
   authorId: Joi.string().guid().message(INVALID_AUTHOR_ID),
-  availableCopies: Joi.number().min(0)
+  availableCopies: Joi.number().min(0),
 });
 
 interface ICreateBookServiceParams {
@@ -26,7 +22,7 @@ interface ICreateBookServiceParams {
   title: string;
   genre: string;
   authorId: string;
-  availableCopies ?: number;
+  availableCopies?: number;
 }
 
 class CreateBookService {
@@ -35,7 +31,7 @@ class CreateBookService {
     title,
     genre,
     authorId,
-    availableCopies
+    availableCopies,
   }: ICreateBookServiceParams): ServiceResponseReturnType {
     try {
       // Validating parameters

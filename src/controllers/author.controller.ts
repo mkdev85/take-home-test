@@ -11,12 +11,10 @@ import { sendResponse } from 'src/utils/responseHandler';
 import type { CustomRequest } from 'src/types';
 
 class AuthorsController {
-
   static async GetAllAuthors(request: CustomRequest, response: Response) {
     sendResponse({
       service: GetAllAuthorsService,
-      parameters: {
-      },
+      parameters: {},
       response,
     });
   }
@@ -24,8 +22,7 @@ class AuthorsController {
   static async GetAuthor(request: CustomRequest, response: Response) {
     sendResponse({
       service: GetAuthorService,
-      parameters: {
-      },
+      parameters: {},
       response,
     });
   }

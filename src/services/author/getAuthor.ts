@@ -2,11 +2,7 @@ import Joi from 'joi';
 import type { ServiceResponseReturnType } from 'src/types';
 
 import { AppDataSource } from 'src/utils/data-source';
-import {
-  AUTHOR_NOT_FOUND,
-  INTERNAL_SERVER_ERROR,
-  INVALID_AUTHOR_ID
-} from 'src/utils/constants';
+import { AUTHOR_NOT_FOUND, INTERNAL_SERVER_ERROR, INVALID_AUTHOR_ID } from 'src/utils/constants';
 import { Author } from 'src/entities/authors';
 import { fieldsValidator } from 'src/utils/methodHelper';
 
@@ -19,9 +15,8 @@ interface IGetAuthorServiceParams {
 }
 
 class GetAuthorService {
-  static async run({ authorId }: IGetAuthorServiceParams) : ServiceResponseReturnType {
+  static async run({ authorId }: IGetAuthorServiceParams): ServiceResponseReturnType {
     try {
-
       // Validating parameters
       const errors = fieldsValidator({
         schema: GetAuthorSchema,
@@ -40,10 +35,12 @@ class GetAuthorService {
       });
 
       if (!author) {
-        return [{ 
-          errorType: INTERNAL_SERVER_ERROR, 
-          message: AUTHOR_NOT_FOUND 
-        }];
+        return [
+          {
+            errorType: INTERNAL_SERVER_ERROR,
+            message: AUTHOR_NOT_FOUND,
+          },
+        ];
       }
 
       return [null, { data: author }];

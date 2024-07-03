@@ -2,11 +2,7 @@ import Joi from 'joi';
 
 import { Author } from 'src/entities/authors';
 import { AppDataSource } from 'src/utils/data-source';
-import {
-  INTERNAL_SERVER_ERROR,
-  AUTHOR_NOT_FOUND,
-  INVALID_PARAMETER,
-} from 'src/utils/constants';
+import { INTERNAL_SERVER_ERROR, AUTHOR_NOT_FOUND, INVALID_PARAMETER } from 'src/utils/constants';
 import type { ServiceResponseReturnType } from 'src/types';
 import { fieldsValidator } from 'src/utils/methodHelper';
 
@@ -20,7 +16,7 @@ interface IUpdateAuthorServiceParams {
   authorId: string;
   birthDate: string;
   bio: string;
-  name: string
+  name: string;
 }
 
 class UpdateAuthorService {
@@ -44,11 +40,11 @@ class UpdateAuthorService {
       const AuthorRepository = AppDataSource.getRepository(Author);
 
       // Check if author exists
-      const authorData = await AuthorRepository.findOne({
+      const authorData = (await AuthorRepository.findOne({
         where: {
-          id: authorId
+          id: authorId,
         },
-      }) as Author;
+      })) as Author;
 
       if (!authorData) {
         return [

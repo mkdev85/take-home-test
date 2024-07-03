@@ -20,15 +20,9 @@ interface IGetAllAuthorsServiceParams {
 class GetAllAuthorsService {
   static async run(parameters: IGetAllAuthorsServiceParams): ServiceResponseReturnType {
     try {
-      const {
-        pageNumber,
-        pageSize,
-        searchByTitle,
-        sortByDate
-      } = parameters;
+      const { pageNumber, pageSize, searchByTitle, sortByDate } = parameters;
 
       const authorQuery = AppDataSource.getRepository(Author).createQueryBuilder('author');
-
 
       if (searchByTitle?.trim()) {
         authorQuery.andWhere(
@@ -48,9 +42,9 @@ class GetAllAuthorsService {
       }
 
       const [authors, count] = await authorQuery
-      .skip((pageNumber - 1) * pageSize)
-      .take(pageSize)
-      .getManyAndCount();
+        .skip((pageNumber - 1) * pageSize)
+        .take(pageSize)
+        .getManyAndCount();
 
       return [null, { data: { authors, count, pageNumber, pageSize, sortByDate, searchByTitle } }];
     } catch (error) {

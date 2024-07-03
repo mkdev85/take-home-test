@@ -23,9 +23,11 @@ class BooksController {
     sendResponse({
       service: CreateBookService,
       parameters: {
-        name: request.body.name,
-        bio: request.body.bio,
-        birthDate: request.body.birthDate,
+        publishedYear: request.body.publishedYear,
+        title: request.body.title,
+        genre: request.body.genre,
+        authorId: request.body.authorId,
+        availableCopies: request.body.availableCopies
       },
       response,
     });

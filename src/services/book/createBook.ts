@@ -8,12 +8,13 @@ import { INTERNAL_SERVER_ERROR, INVALID_PARAMETER, INVALID_AUTHOR_ID } from 'src
 
 import type { ServiceResponseReturnType } from 'src/types';
 import { fieldsValidator } from 'src/utils/methodHelper';
+import { raw } from 'express';
 
 const CreateBookSchema = Joi.object({
   publishedYear: Joi.string().trim().required(),
   title: Joi.string().trim().required(),
   genre: Joi.string().trim().required(),
-  authorId: Joi.string().guid().message(INVALID_AUTHOR_ID),
+  authorId: Joi.string().guid().message('sssss').required(),
   availableCopies: Joi.number().min(0),
 });
 
@@ -52,7 +53,7 @@ class CreateBookService {
         },
       });
 
-      if (authorData && authorData.name) {
+      if (!authorData || !authorData.name) {
         return [
           {
             errorType: INVALID_PARAMETER,

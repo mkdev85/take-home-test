@@ -4,6 +4,9 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 
+import swaggerUi from 'swagger-ui-express';
+const swaggerFile = require('../swagger_output.json')
+
 import initRoutes from './routes';
 
 import { AppDataSource } from './utils/data-source';
@@ -29,6 +32,7 @@ const setupMiddlewares = () => {
   app.use(express.json());
 
   app.use(express.urlencoded({ extended: true }));
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 };
 
 const startDatabase = async () => {

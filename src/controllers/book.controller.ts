@@ -1,30 +1,34 @@
-// import type { Response } from 'express';
+import type { Response } from 'express';
 
-// import GetAllTodosService from 'src/services/todos/getAllTodos';
-// import CreateTodoService from 'src/services/todos/createTodo';
-// import UpdateTodoService from 'src/services/todos/updateTodo';
-// import DeleteTodoService from 'src/services/todos/deleteTodo';
+import CreateBookService from 'src/services/book/createBook';
+import DeleteBookService from 'src/services/book/deleteBook';
 
-// import { sendResponse } from 'src/utils/responseHandler';
+import { sendResponse } from 'src/utils/responseHandler';
 
-// import type { CustomRequest } from 'src/types';
+import type { CustomRequest } from 'src/types';
 
-// class BooksController {
-//   static async GetAllBooks(request: CustomRequest, response: Response) {
-//     sendResponse({
-//       service: GetAllTodosService,
-//       parameters: {
-//         pageNumber: Number(request.query.page_number) || 1,
-//         pageSize: Number(request.query.page_size) || 10,
-//         searchKeyword: request.query.search_keyword,
-//         sortByDate: request.query.sort_by_date,
-//         sortByTitle: request.query.sort_by_title,
-//         status: request.query.status,
-//         loggedInUserId: request.loggedInUserId,
-//       },
-//       response,
-//     });
-//   }
-// }
+class BooksController {
+  static async CreateBook(request: CustomRequest, response: Response) {
+    sendResponse({
+      service: CreateBookService,
+      parameters: {
+        name: request.body.name,
+        bio: request.body.bio,
+        birthDate: request.body.birthDate,
+      },
+      response,
+    });
+  }
 
-// export default TodosController;
+  static async DeleteBook(request: CustomRequest, response: Response) {
+    sendResponse({
+      service: DeleteBookService,
+      parameters: {
+        bookId: request.params.bookId,
+      },
+      response,
+    });
+  }
+}
+
+export default BooksController;

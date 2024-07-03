@@ -1,11 +1,12 @@
-// import express from 'express';
+import express from 'express';
 
-// import bookController from 'src/controllers/book.controller';
-// import Authenticate from 'src/middlewares/authenticate';
+import bookController from 'src/controllers/book.controller';
 
-// const args = { mergeParams: true };
-// const bookRouter = express.Router(args);
+const args = { mergeParams: true };
+const bookRouter = express.Router(args);
 
-// bookRouter.route('/').post(bookController.GetAllTodos);
+bookRouter.route('/').post(bookController.CreateBook);
 
-// export { bookRouter };
+bookRouter.route('/:bookId').post(bookController.DeleteBook);
+
+export { bookRouter };

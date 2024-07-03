@@ -6,7 +6,6 @@ import GetAllAuthorsService from 'src/services/author/getAllAuthors';
 import GetAuthorService from 'src/services/author/getAuthor';
 import UpdateAuthorService from 'src/services/author/updateAuthor';
 
-
 import { sendResponse } from 'src/utils/responseHandler';
 
 import type { CustomRequest } from 'src/types';

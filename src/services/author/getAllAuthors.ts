@@ -2,6 +2,8 @@ import type { ServiceResponseReturnType } from 'src/types';
 
 import { AppDataSource } from 'src/utils/data-source';
 import {
+  ASCENDING_ORDER_TYPE,
+  DESCENDING_ORDER_TYPE,
   INTERNAL_SERVER_ERROR,
 } from 'src/utils/constants';
 
@@ -11,10 +13,8 @@ import { Brackets } from 'typeorm';
 interface IGetAllAuthorsServiceParams {
   pageNumber: number;
   pageSize: number;
-  searchKeyword?: string;
-  sortByName?: string;
+  searchByTitle?: string;
   sortByDate?: string;
-  loggedInUserId: string;
 }
 
 class GetAllAuthorsService {
@@ -23,30 +23,36 @@ class GetAllAuthorsService {
       const {
         pageNumber,
         pageSize,
-        loggedInUserId,
-        searchKeyword,
-        sortByDate,
-        sortByName,
+        searchByTitle,
+        sortByDate
       } = parameters;
 
       const authorQuery = AppDataSource.getRepository(Author).createQueryBuilder('author');
 
 
-      if (searchKeyword?.trim()) {
+      if (searchByTitle?.trim()) {
         authorQuery.andWhere(
           new Brackets(qb => {
-            qb.where('author.name ILike :search OR author.bio ILike :search', {
-              search: `%${searchKeyword}%`,
+            qb.where('author.name ILike :search', {
+              search: `%${searchByTitle}%`,
             });
           }),
         );
       }
 
-      const [authors, count] = await authorQuery
-        .take(pageSize)
-        .getManyAndCount();
+      if (sortByDate) {
+        authorQuery.orderBy({
+          'author.created_date':
+            sortByDate === DESCENDING_ORDER_TYPE ? DESCENDING_ORDER_TYPE : ASCENDING_ORDER_TYPE,
+        });
+      }
 
-      return [null, { data: { authors, count, pageNumber, pageSize, sortByDate, sortByName } }];
+      const [authors, count] = await authorQuery
+      .skip((pageNumber - 1) * pageSize)
+      .take(pageSize)
+      .getManyAndCount();
+
+      return [null, { data: { authors, count, pageNumber, pageSize, sortByDate, searchByTitle } }];
     } catch (error) {
       console.log('Error while fetching all author items', error);
       return [{ errorType: INTERNAL_SERVER_ERROR }];

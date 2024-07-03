@@ -1,11 +1,9 @@
 import Joi from 'joi';
-import { ILike } from 'typeorm';
 
 import { Author } from 'src/entities/authors';
 import { AppDataSource } from 'src/utils/data-source';
 import {
   INTERNAL_SERVER_ERROR,
-  AUTHOR_NAME_ALREADY_EXIST,
   AUTHOR_NOT_FOUND,
   INVALID_PARAMETER,
 } from 'src/utils/constants';
@@ -13,10 +11,10 @@ import type { ServiceResponseReturnType } from 'src/types';
 import { fieldsValidator } from 'src/utils/methodHelper';
 
 const UpdateAuthorSchema = Joi.object({
-  birthDate: Joi.date().raw().required(),
-  bio: Joi.string().trim().required(),
-  name: Joi.string().trim().required(),
-});
+  birthDate: Joi.date().raw(),
+  bio: Joi.string().trim(),
+  name: Joi.string().trim(),
+}).or('birthDate', 'bio', 'name');
 
 interface IUpdateAuthorServiceParams {
   authorId: string;
@@ -46,13 +44,13 @@ class UpdateAuthorService {
       const AuthorRepository = AppDataSource.getRepository(Author);
 
       // Check if author exists
-      const authorToUpdate = await AuthorRepository.findOne({
+      const authorData = await AuthorRepository.findOne({
         where: {
           id: authorId
         },
-      });
+      }) as Author;
 
-      if (!authorToUpdate) {
+      if (!authorData) {
         return [
           {
             errorType: INVALID_PARAMETER,
@@ -61,18 +59,18 @@ class UpdateAuthorService {
         ];
       }
 
-      // Update author fields
-      authorToUpdate.bio = bio;
-      authorToUpdate.birthdate = birthDate;
-      authorToUpdate.name = name;
-
-      await AuthorRepository.save(authorToUpdate);
+      await AuthorRepository.save({
+        id: authorId,
+        birthDate: birthDate ?? authorData.birthdate,
+        bio: bio ?? authorData.bio,
+        name: name ?? authorData.name,
+      });
 
       return [
         null,
         {
           data: { birthDate, bio, name },
-          message: `Author successfully updated!`,
+          message: `Author '${name}' has been successfully updated!`,
         },
       ];
     } catch (error) {

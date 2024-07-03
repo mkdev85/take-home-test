@@ -16,3 +16,5 @@ export const TOKEN_EXPIRED = 'Token in expired!';
 export const AUTHOR_NAME_ALREADY_EXIST = 'Author name is already exist';
 export const AUTHOR_NOT_FOUND = 'Author not found';
 
+export const DESCENDING_ORDER_TYPE = 'DESC';
+export const ASCENDING_ORDER_TYPE = 'ASC';

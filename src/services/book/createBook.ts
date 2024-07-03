@@ -8,7 +8,6 @@ import { INTERNAL_SERVER_ERROR, INVALID_PARAMETER, INVALID_AUTHOR_ID } from 'src
 
 import type { ServiceResponseReturnType } from 'src/types';
 import { fieldsValidator } from 'src/utils/methodHelper';
-import { raw } from 'express';
 
 const CreateBookSchema = Joi.object({
   publishedYear: Joi.string().trim().required(),
@@ -50,10 +49,10 @@ class CreateBookService {
       const authorData = await AuthorRepository.findOne({
         where: {
           id: authorId,
-        },
+        }
       });
 
-      if (!authorData || !authorData.name) {
+      if (!authorData?.name) {
         return [
           {
             errorType: INVALID_PARAMETER,
@@ -68,7 +67,7 @@ class CreateBookService {
       book.title = title;
       book.genre = genre;
       book.publishedYear = publishedYear;
-      book.author = authorData as Author;
+      book.author = authorData;
 
       if (availableCopies) {
         book.availableCopies = availableCopies;

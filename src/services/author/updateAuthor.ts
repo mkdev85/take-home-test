@@ -1,10 +1,12 @@
 import Joi from 'joi';
 
 import { Author } from 'src/entities/authors';
+
 import { AppDataSource } from 'src/utils/data-source';
 import { INTERNAL_SERVER_ERROR, AUTHOR_NOT_FOUND, INVALID_PARAMETER } from 'src/utils/constants';
-import type { ServiceResponseReturnType } from 'src/types';
 import { fieldsValidator } from 'src/utils/methodHelper';
+
+import type { ServiceResponseReturnType } from 'src/types';
 
 const UpdateAuthorSchema = Joi.object({
   birthDate: Joi.date().raw(),
@@ -44,7 +46,7 @@ class UpdateAuthorService {
         where: {
           id: authorId,
         },
-      })) as Author;
+      }))!;
 
       if (!authorData) {
         return [

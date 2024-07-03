@@ -14,7 +14,12 @@ class AuthorsController {
   static async GetAllAuthors(request: CustomRequest, response: Response) {
     sendResponse({
       service: GetAllAuthorsService,
-      parameters: {},
+      parameters: {
+        pageNumber: Number(request.query.page_number) || 1,
+        pageSize: Number(request.query.page_size) || 20,
+        searchByTitle: request.query.search_by_title,
+        sortByDate: request.query.sort_by_Date,
+      },
       response,
     });
   }
@@ -22,7 +27,9 @@ class AuthorsController {
   static async GetAuthor(request: CustomRequest, response: Response) {
     sendResponse({
       service: GetAuthorService,
-      parameters: {},
+      parameters: {
+        authorId: request.params.authorId,
+      },
       response,
     });
   }

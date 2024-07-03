@@ -2,12 +2,23 @@ import type { Response } from 'express';
 
 import CreateBookService from 'src/services/book/createBook';
 import DeleteBookService from 'src/services/book/deleteBook';
+import GetBookService from 'src/services/book/getBook';
 
 import { sendResponse } from 'src/utils/responseHandler';
 
 import type { CustomRequest } from 'src/types';
 
 class BooksController {
+  static async GetBook(request: CustomRequest, response: Response) {
+    sendResponse({
+      service: GetBookService,
+      parameters: {
+        bookId: request.params.bookId,
+      },
+      response,
+    });
+  }
+
   static async CreateBook(request: CustomRequest, response: Response) {
     sendResponse({
       service: CreateBookService,

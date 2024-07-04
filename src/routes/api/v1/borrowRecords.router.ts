@@ -5,6 +5,8 @@ import borrowRecordController from 'src/controllers/borrowRecords.controller';
 const args = { mergeParams: true };
 const borrowRecordRouter = express.Router(args);
 
+borrowRecordRouter.route('/').get(borrowRecordController.GetAllBorrowRecords);
+
 borrowRecordRouter.route('/:borrowRecordId').get(borrowRecordController.GetBorrowRecord);
 
 borrowRecordRouter.route('/').post(borrowRecordController.CreateBorrowRecord);

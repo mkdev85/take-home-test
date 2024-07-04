@@ -14,7 +14,7 @@ const CreateBorrowRecordSchema = Joi.object({
   returnDate: Joi.date().format('YYYY-MM-DD').raw().required(),
   borrowDate: Joi.date().format('YYYY-MM-DD').raw().required(),
   borrower: Joi.string().trim().required(),
-  bookId: Joi.string().guid().message(INVALID_BOOK_ID).required()
+  bookId: Joi.string().guid().message(INVALID_BOOK_ID).required(),
 });
 
 interface ICreateBorrowRecordServiceParams {

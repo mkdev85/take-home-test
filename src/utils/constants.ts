@@ -19,3 +19,6 @@ export const AUTHOR_NOT_FOUND = 'Author not found';
 
 export const DESCENDING_ORDER_TYPE = 'DESC';
 export const ASCENDING_ORDER_TYPE = 'ASC';
+
+export const INVALID_BORROW_RECORD_ID = 'Borrow Record Id is not valid';
+export const BORROW_RECORD_NOT_FOUND = 'Borrow Record not found';

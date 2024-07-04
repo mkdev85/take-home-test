@@ -7,4 +7,6 @@ const borrowRecordRouter = express.Router(args);
 
 borrowRecordRouter.route('/').post(borrowRecordController.CreateBorrowRecord);
 
+borrowRecordRouter.route('/:borrowRecordId').delete(borrowRecordController.DeleteBorrowRecord);
+
 export { borrowRecordRouter };

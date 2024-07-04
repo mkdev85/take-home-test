@@ -4,6 +4,7 @@ import { sendResponse } from 'src/utils/responseHandler';
 
 import type { CustomRequest } from 'src/types';
 import CreateBorrowRecordService from 'src/services/borrowRecords/createBorrowRecord';
+import DeleteBorrowRecordService from 'src/services/borrowRecords/deleteBorrowrecord';
 
 class BorrowRecordController {
   static async CreateBorrowRecord(request: CustomRequest, response: Response) {
@@ -13,7 +14,17 @@ class BorrowRecordController {
         returnDate: request.body.returnDate,
         borrowDate: request.body.borrowDate,
         borrower: request.body.borrower,
-        bookId: request.body.bookId
+        bookId: request.body.bookId,
+      },
+      response,
+    });
+  }
+
+  static async DeleteBorrowRecord(request: CustomRequest, response: Response) {
+    sendResponse({
+      service: DeleteBorrowRecordService,
+      parameters: {
+        borrowRecordId: request.body.borrowRecordId,
       },
       response,
     });

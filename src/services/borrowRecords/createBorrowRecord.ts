@@ -11,7 +11,7 @@ import type { ServiceResponseReturnType } from 'src/types';
 import { BorrowRecord } from 'src/entities/borrowRecords';
 
 const CreateBorrowRecordSchema = Joi.object({
-  returnDate: Joi.date().format('YYYY-MM-DD').raw().required(),
+  returnDate: Joi.date().format('YYYY-MM-DD').greater(Joi.ref('borrowDate')).required(),
   borrowDate: Joi.date().format('YYYY-MM-DD').raw().required(),
   borrower: Joi.string().trim().required(),
   bookId: Joi.string().guid().message(INVALID_BOOK_ID).required(),

@@ -1,5 +1,5 @@
 import { ILike } from 'typeorm';
-import Joi from 'joi';
+import Joi from 'src/utils/joiDate';
 
 import { Author } from 'src/entities/authors';
 
@@ -14,7 +14,7 @@ import type { ServiceResponseReturnType } from 'src/types';
 import { fieldsValidator } from 'src/utils/methodHelper';
 
 const CreateAuthorSchema = Joi.object({
-  birthDate: Joi.date().raw().required(),
+  birthDate: Joi.date().format('YYYY-MM-DD').raw().required(),
   bio: Joi.string().trim().required(),
   name: Joi.string().trim().required(),
 });

@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi from 'src/utils/joiDate';
 
 import { Author } from 'src/entities/authors';
 import { Book } from 'src/entities/books';
@@ -10,10 +10,10 @@ import type { ServiceResponseReturnType } from 'src/types';
 import { fieldsValidator } from 'src/utils/methodHelper';
 
 const CreateBookSchema = Joi.object({
-  publishedYear: Joi.string().trim().required(),
+  publishedYear: Joi.date().format('YYYY').trim().required(),
   title: Joi.string().trim().required(),
   genre: Joi.string().trim().required(),
-  authorId: Joi.string().guid().message('sssss').required(),
+  authorId: Joi.string().guid().message(INVALID_AUTHOR_ID).required(),
   availableCopies: Joi.number().min(0),
 });
 

@@ -26,7 +26,7 @@ export class BorrowRecord {
 
   @OneToOne(type => Book)
   @JoinColumn()
-  bookId: Book;
+  book: Book;
 
   @CreateDateColumn()
   created_date: Date;

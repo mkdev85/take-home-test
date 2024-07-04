@@ -65,7 +65,7 @@ class CreateBorrowRecordService {
       borrowRecord.returnDate = returnDate;
       borrowRecord.borrowDate = borrowDate;
       borrowRecord.borrower = borrower;
-      borrowRecord.bookId = bookData;
+      borrowRecord.book = bookData;
 
       const newBorrowData = await BorrowRecordRepository.save(borrowRecord);
 

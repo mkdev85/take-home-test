@@ -18,7 +18,7 @@ class AuthorsController {
         pageNumber: Number(request.query.page_number) || 1,
         pageSize: Number(request.query.page_size) || 20,
         searchByName: request.query.search_by_name,
-        sortByDate: request.query.sort_by_Date,
+        sortByDate: request.query.sort_by_date,
       },
       response,
     });

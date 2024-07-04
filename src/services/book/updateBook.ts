@@ -44,11 +44,11 @@ class UpdateBookService {
       const BookRepository = AppDataSource.getRepository(Book);
 
       // Check if book exists
-      const bookData = (await BookRepository.findOne({
+      const bookData = await BookRepository.findOne({
         where: {
           id: bookId,
         },
-      }));
+      });
 
       if (!bookData?.id) {
         return [

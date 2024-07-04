@@ -14,7 +14,8 @@ export class Book {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Author, author => author.books, { nullable: false, onDelete: "CASCADE" }) author: Author;
+  @ManyToOne(() => Author, author => author.books, { nullable: false, onDelete: 'CASCADE' })
+  author: Author;
 
   @Column({ nullable: false, type: 'varchar' })
   title: string;

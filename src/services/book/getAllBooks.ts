@@ -1,3 +1,4 @@
+import Joi from 'src/utils/joiDate';
 import type { ServiceResponseReturnType } from 'src/types';
 
 import { AppDataSource } from 'src/utils/data-source';
@@ -5,10 +6,23 @@ import {
   ASCENDING_ORDER_TYPE,
   DESCENDING_ORDER_TYPE,
   INTERNAL_SERVER_ERROR,
+  INVALID_AUTHOR_ID,
 } from 'src/utils/constants';
 
 import { Brackets } from 'typeorm';
 import { Book } from 'src/entities/books';
+import { fieldsValidator } from 'src/utils/methodHelper';
+
+const GetAllBooksServiceSchema = Joi.object({
+  pageNumber: Joi.number().min(1),
+  pageSize: Joi.number().min(5),
+  title: Joi.string().trim(),
+  genre: Joi.string().trim(),
+  publishedYear: Joi.string().trim(),
+  authorId: Joi.string().guid().message(INVALID_AUTHOR_ID),
+  sortByDate: Joi.string().valid('DESC', 'ASC'),
+  sortByPublishedYear: Joi.string().trim(),
+});
 
 interface IGetAllBooksServiceParams {
   pageNumber: number;
@@ -24,10 +38,30 @@ interface IGetAllBooksServiceParams {
 class GetAllBoooksService {
   static async run(parameters: IGetAllBooksServiceParams): ServiceResponseReturnType {
     try {
-      const { pageNumber, pageSize, title, genre, publishedYear, authorId, sortByDate, sortByPublishedYear } =
-        parameters;
+      const {
+        pageNumber,
+        pageSize,
+        title,
+        genre,
+        publishedYear,
+        authorId,
+        sortByDate,
+        sortByPublishedYear,
+      } = parameters;
 
-      const bookQuery = AppDataSource.getRepository(Book).createQueryBuilder('book').leftJoinAndSelect('book.author', 'author');
+      // Validating parameters
+      const errors = fieldsValidator({
+        schema: GetAllBooksServiceSchema,
+        fields: parameters,
+      });
+
+      if (errors) {
+        return [errors];
+      }
+
+      const bookQuery = AppDataSource.getRepository(Book)
+        .createQueryBuilder('book')
+        .leftJoinAndSelect('book.author', 'author');
 
       if (authorId) {
         bookQuery.where('book.author = :authorId', { authorId });
@@ -73,11 +107,14 @@ class GetAllBoooksService {
       if (sortByPublishedYear) {
         bookQuery.orderBy({
           'book.publishedYear':
-            sortByPublishedYear === DESCENDING_ORDER_TYPE ? DESCENDING_ORDER_TYPE : ASCENDING_ORDER_TYPE,
+            sortByPublishedYear === DESCENDING_ORDER_TYPE
+              ? DESCENDING_ORDER_TYPE
+              : ASCENDING_ORDER_TYPE,
         });
       }
 
-      const [books, count] = await bookQuery.select(['book', 'author.id', 'author.name'])
+      const [books, count] = await bookQuery
+        .select(['book', 'author.id', 'author.name'])
         .skip((pageNumber - 1) * pageSize)
         .take(pageSize)
         .getManyAndCount();

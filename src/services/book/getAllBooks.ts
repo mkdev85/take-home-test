@@ -26,9 +26,8 @@ class GetAllBoooksService {
       const { pageNumber, pageSize, title, genre, publishedYear, authorId, sortByDate } =
         parameters;
 
-      const bookQuery = AppDataSource.getRepository(Book).createQueryBuilder('book');
+      const bookQuery = AppDataSource.getRepository(Book).createQueryBuilder('book').leftJoinAndSelect('book.author', 'author');
 
-      console.log({ authorId, title });
       if (authorId) {
         bookQuery.where('book.author = :authorId', { authorId });
       }
@@ -70,7 +69,7 @@ class GetAllBoooksService {
         });
       }
 
-      const [books, count] = await bookQuery
+      const [books, count] = await bookQuery.select(['book', 'author.id', 'author.name'])
         .skip((pageNumber - 1) * pageSize)
         .take(pageSize)
         .getManyAndCount();

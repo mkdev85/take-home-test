@@ -22,3 +22,4 @@ export const ASCENDING_ORDER_TYPE = 'ASC';
 
 export const INVALID_BORROW_RECORD_ID = 'Borrow Record Id is not valid';
 export const BORROW_RECORD_NOT_FOUND = 'Borrow Record not found';
+export const BORROW_RECORD_ALREADY_EXIST = 'This book has already borrowed for the selected duration. Please try different duration.'

@@ -66,7 +66,7 @@ class CreateBookService {
       const book = new Book();
       book.title = title;
       book.genre = genre;
-      book.publishedYear = publishedYear;
+      book.publishedYear = Number(publishedYear);
       book.author = authorData;
 
       if (availableCopies) {

@@ -48,9 +48,9 @@ class UpdateBookService {
         where: {
           id: bookId,
         },
-      }))!;
+      }));
 
-      if (!bookData) {
+      if (!bookData?.id) {
         return [
           {
             errorType: INVALID_PARAMETER,
@@ -63,13 +63,14 @@ class UpdateBookService {
         id: bookId,
         title: title ?? bookData.title,
         genre: genre ?? bookData.genre,
+        publishedYear: Number(publishedYear) ?? bookData.publishedYear,
         availableCopies: availableCopies ?? bookData.availableCopies,
       });
 
       return [
         null,
         {
-          data: { title, genre, availableCopies },
+          data: { title, genre, availableCopies, publishedYear },
           message: `Book '${title}' has been successfully updated!`,
         },
       ];

@@ -30,8 +30,6 @@ class GetAllBorrowRecordsService {
         .take(pageSize)
         .getManyAndCount();
 
-      console.log({ borrowRecords });
-
       return [null, { data: { borrowRecords, count, pageNumber, pageSize } }];
     } catch (error) {
       console.log('Error while fetching all borrow records items', error);

@@ -18,12 +18,13 @@ interface IGetAllBooksServiceParams {
   publishedYear?: string;
   authorId?: string;
   sortByDate?: string;
+  sortByPublishedYear?: string;
 }
 
 class GetAllBoooksService {
   static async run(parameters: IGetAllBooksServiceParams): ServiceResponseReturnType {
     try {
-      const { pageNumber, pageSize, title, genre, publishedYear, authorId, sortByDate } =
+      const { pageNumber, pageSize, title, genre, publishedYear, authorId, sortByDate, sortByPublishedYear } =
         parameters;
 
       const bookQuery = AppDataSource.getRepository(Book).createQueryBuilder('book').leftJoinAndSelect('book.author', 'author');
@@ -66,6 +67,13 @@ class GetAllBoooksService {
         bookQuery.orderBy({
           'book.created_date':
             sortByDate === DESCENDING_ORDER_TYPE ? DESCENDING_ORDER_TYPE : ASCENDING_ORDER_TYPE,
+        });
+      }
+
+      if (sortByPublishedYear) {
+        bookQuery.orderBy({
+          'book.publishedYear':
+            sortByPublishedYear === DESCENDING_ORDER_TYPE ? DESCENDING_ORDER_TYPE : ASCENDING_ORDER_TYPE,
         });
       }
 

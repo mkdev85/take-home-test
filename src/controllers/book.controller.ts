@@ -32,6 +32,7 @@ class BooksController {
         genre: request.query.genre,
         publishedYear: request.query.published_year,
         sortBydate: request.query.sort_by_date,
+        sortByPublishedYear: request.query.sort_by_published_year
       },
       response,
     });

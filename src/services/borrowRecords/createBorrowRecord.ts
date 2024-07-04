@@ -3,12 +3,13 @@ import Joi from 'src/utils/joiDate';
 import { Book } from 'src/entities/books';
 
 import { AppDataSource } from 'src/utils/data-source';
-import { INTERNAL_SERVER_ERROR, INVALID_PARAMETER, INVALID_BOOK_ID } from 'src/utils/constants';
+import { INTERNAL_SERVER_ERROR, INVALID_PARAMETER, INVALID_BOOK_ID, BORROW_RECORD_ALREADY_EXIST } from 'src/utils/constants';
 
 import { fieldsValidator } from 'src/utils/methodHelper';
 
 import type { ServiceResponseReturnType } from 'src/types';
 import { BorrowRecord } from 'src/entities/borrowRecords';
+import { Between, LessThanOrEqual, MoreThanOrEqual } from 'typeorm';
 
 const CreateBorrowRecordSchema = Joi.object({
   returnDate: Joi.date().format('YYYY-MM-DD').greater(Joi.ref('borrowDate')).required(),
@@ -60,6 +61,26 @@ class CreateBorrowRecordService {
       }
 
       const BorrowRecordRepository = AppDataSource.getRepository(BorrowRecord);
+
+      const oldBorrowRecords = await BorrowRecordRepository.findOne({
+        where: [{
+          book: { id: bookId },
+          borrowDate: Between(borrowDate, returnDate)
+        }, {
+          book: { id: bookId },
+          borrowDate: MoreThanOrEqual(borrowDate),
+          returnDate: LessThanOrEqual(returnDate)
+        }]
+      })
+
+      if (oldBorrowRecords?.id) {
+        return [
+          {
+            errorType: INVALID_PARAMETER,
+            message: BORROW_RECORD_ALREADY_EXIST,
+          },
+        ];
+      }
 
       const borrowRecord = new BorrowRecord();
       borrowRecord.returnDate = returnDate;

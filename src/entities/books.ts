@@ -14,13 +14,13 @@ export class Book {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Author, author => author.books, { nullable: false }) author: Author;
+  @ManyToOne(() => Author, author => author.books, { nullable: false, onDelete: "CASCADE" }) author: Author;
 
   @Column({ nullable: false, type: 'varchar' })
   title: string;
 
-  @Column({ nullable: false, type: 'varchar' })
-  publishedYear: string;
+  @Column({ nullable: false, type: 'int' })
+  publishedYear: number;
 
   @Column({ nullable: false, type: 'varchar' })
   genre: string;

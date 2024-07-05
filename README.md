@@ -19,17 +19,6 @@ Swagger doc URL: http://localhost:3000/api-docs [host and port can be changed as
 
 This will show all the endpoints.
 
-## Implemented authorization
-For POST, DELETE, and PUT endpoints, we have implemented authorization. Please have a look at the flow:
-- We are creating a default user when app starts. 
- User Email: admin@gmail.com
- Password: admin
-
-- Now to get the access token, we have to call the login API and pass the credentials.
- http://localhost:3000/api/v1/auth/login  
-
-- Access token will be used in protected routes i.e. PUT, DELETE, and POST endpoints.  
-
 ## Assumptions 
 - We have defined the author name as unique.
 - In the borrow record entity, the borrow date can't be greater than current date and same return date should be greater than the current date.
@@ -43,7 +32,6 @@ For POST, DELETE, and PUT endpoints, we have implemented authorization. Please h
 - Added pagination on all the resources i.e /authors [GET], /books [GET] and /borrow-records [GET]
 - Apart from pagination, also applied filtering on above resources. You can check the full details in the swagger doc.
 - Created basic docker file.
-- Integrated JWT middleware on PUT, DELETE, and POST endpoints.
 
 # Not covered:
 - Test cases: Due to the time limit, I have not written the test cases but it's not a big deal for me. If I have extra time, I would definitely complete it. 

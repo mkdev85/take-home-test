@@ -3,9 +3,8 @@ import {
   CreateDateColumn,
   Column,
   UpdateDateColumn,
-  OneToOne,
-  JoinColumn,
   PrimaryGeneratedColumn,
+  ManyToOne,
 } from 'typeorm';
 
 import { Book } from './books';
@@ -24,8 +23,7 @@ export class BorrowRecord {
   @Column({ nullable: false, type: 'date' })
   returnDate: string;
 
-  @OneToOne(type => Book)
-  @JoinColumn()
+  @ManyToOne(() => Book, book => book.borrowRecords, { onDelete: 'CASCADE' })
   book: Book;
 
   @CreateDateColumn()

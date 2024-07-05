@@ -52,7 +52,7 @@ class CreateBookService {
         },
       });
 
-      if (!authorData?.name) {
+      if (!authorData?.id) {
         return [
           {
             errorType: INVALID_PARAMETER,

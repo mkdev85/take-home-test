@@ -46,7 +46,7 @@ class GetBookService {
         },
       });
 
-      if (!book) {
+      if (!book?.id) {
         return [
           {
             errorType: INTERNAL_SERVER_ERROR,

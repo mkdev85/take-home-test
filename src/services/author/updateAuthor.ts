@@ -48,7 +48,7 @@ class UpdateAuthorService {
         },
       });
 
-      if (!authorData) {
+      if (!authorData?.id) {
         return [
           {
             errorType: INVALID_PARAMETER,

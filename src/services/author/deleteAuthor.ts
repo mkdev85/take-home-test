@@ -34,7 +34,7 @@ class DeleteAuthorService {
         id: authorId,
       });
 
-      if (!authorData) {
+      if (!authorData?.id) {
         return [
           {
             errorType: UNAUTHORIZED,

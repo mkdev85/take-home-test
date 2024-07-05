@@ -34,7 +34,7 @@ class GetAuthorService {
         where: { id: authorId },
       });
 
-      if (!author) {
+      if (!author?.id) {
         return [
           {
             errorType: INTERNAL_SERVER_ERROR,

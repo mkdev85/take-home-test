@@ -34,7 +34,7 @@ class DeleteBookService {
         id: bookId,
       });
 
-      if (!bookData) {
+      if (!bookData?.id) {
         return [
           {
             errorType: UNAUTHORIZED,

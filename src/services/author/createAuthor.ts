@@ -50,7 +50,7 @@ class CreateAuthorService {
         },
       });
 
-      if (!authorData?.id) {
+      if (authorData?.id) {
         return [
           {
             errorType: INVALID_PARAMETER,

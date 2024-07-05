@@ -30,11 +30,15 @@ This will show all the endpoints.
  Example: 
     - If book 'A' is already borrowed in duration `2024-07-05` [Borrow Date] and `2024-07-09` [Return Date] 
     - If the user wants to borrow the same book in this duration then we will throw an error because the book is already borrowed for this duration.   
+- We have applied cascade deletion, so all books associated with author will be removed if author removed and same for the book and borrow records.    
 
 ## Covered bonus points:
 - Added pagination on all the resources i.e /authors [GET], /books [GET] and /borrow-records [GET]
 - Apart from pagination, also applied filtering on above resources. You can check the full details in the swagger doc.
 - Created basic docker file.
 
-# Not covered:
-- Test cases: Due to the time limit, I have not written the test cases but it's not a big deal for me. If I have extra time, I would definitely complete it. 
+## Note:
+- I have pushed the .env file assuming it's test task. 
+
+## Not covered:
+- Test cases: Due to the time limit, I have not written the test cases.

@@ -1,6 +1,7 @@
 import Joi from 'src/utils/joiDate';
 
 import { Book } from 'src/entities/books';
+import { BorrowRecord } from 'src/entities/borrowRecords';
 
 import { AppDataSource } from 'src/utils/data-source';
 import {
@@ -8,12 +9,12 @@ import {
   INVALID_PARAMETER,
   INVALID_BOOK_ID,
   BORROW_RECORD_ALREADY_EXIST,
+  INVALID_BORROW_RECORD_BORROW_DATE,
+  INVALID_BORROW_RECORD_RETURN_DATE,
 } from 'src/utils/constants';
-
-import { fieldsValidator } from 'src/utils/methodHelper';
+import { fieldsValidator, isBorrowDateValid, isReturnDateValid } from 'src/utils/methodHelper';
 
 import type { ServiceResponseReturnType } from 'src/types';
-import { BorrowRecord } from 'src/entities/borrowRecords';
 import { Between, LessThanOrEqual, MoreThanOrEqual } from 'typeorm';
 
 const CreateBorrowRecordSchema = Joi.object({
@@ -46,6 +47,24 @@ class CreateBorrowRecordService {
 
       if (errors) {
         return [errors];
+      }
+
+      if (!isBorrowDateValid(borrowDate)) {
+        return [
+          {
+            errorType: INVALID_PARAMETER,
+            message: INVALID_BORROW_RECORD_BORROW_DATE,
+          },
+        ];
+      }
+
+      if (!isReturnDateValid(returnDate)) {
+        return [
+          {
+            errorType: INVALID_PARAMETER,
+            message: INVALID_BORROW_RECORD_RETURN_DATE,
+          },
+        ];
       }
 
       const BookRepository = AppDataSource.getRepository(Book);
@@ -101,7 +120,13 @@ class CreateBorrowRecordService {
       return [
         null,
         {
-          data: { returnDate, borrowDate, borrower, bookId, id: newBorrowData.id },
+          data: {
+            returnDate,
+            borrowDate,
+            borrower,
+            book: { id: bookData.id, title: bookData.title },
+            id: newBorrowData.id,
+          },
           message: `Borrow Record has been successfully created!`,
         },
       ];

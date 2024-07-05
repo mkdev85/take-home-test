@@ -2,21 +2,23 @@ import Joi from 'src/utils/joiDate';
 import moment from 'moment';
 
 import { AppDataSource } from 'src/utils/data-source';
-import { 
-  INTERNAL_SERVER_ERROR, 
-  INVALID_PARAMETER, 
-  INVALID_BORROW_RECORD_ID, 
-  BORROW_RECORD_NOT_FOUND, 
-  INVAID_BORROW_RECORD_RETURN_DATE 
+import {
+  INTERNAL_SERVER_ERROR,
+  INVALID_PARAMETER,
+  INVALID_BORROW_RECORD_ID,
+  BORROW_RECORD_NOT_FOUND,
+  INVAID_BORROW_RECORD_RETURN_DATE,
+  INVALID_BORROW_RECORD_RETURN_DATE,
 } from 'src/utils/constants';
-import { fieldsValidator } from 'src/utils/methodHelper';
+import { fieldsValidator, isReturnDateValid } from 'src/utils/methodHelper';
 
 import type { ServiceResponseReturnType } from 'src/types';
+import { BorrowRecord } from 'src/entities/borrowRecords';
 
 const UpdateBorrowRecordSchema = Joi.object({
   returnDate: Joi.date().format('YYYY-MM-DD'),
   borrowRecordId: Joi.string().guid().message(INVALID_BORROW_RECORD_ID).required(),
-})
+});
 
 interface IUpdateBorrowRecordServiceParams {
   returnDate?: string;
@@ -26,7 +28,7 @@ interface IUpdateBorrowRecordServiceParams {
 class UpdateBorrowRecordService {
   static async run({
     returnDate,
-    borrowRecordId
+    borrowRecordId,
   }: IUpdateBorrowRecordServiceParams): ServiceResponseReturnType {
     try {
       // Validating parameters
@@ -39,14 +41,23 @@ class UpdateBorrowRecordService {
         return [errors];
       }
 
-      const BorrowRecordRepository = AppDataSource.getRepository(borrowRecordId);
+      if (returnDate && !isReturnDateValid(returnDate)) {
+        return [
+          {
+            errorType: INVALID_PARAMETER,
+            message: INVALID_BORROW_RECORD_RETURN_DATE,
+          },
+        ];
+      }
+
+      const BorrowRecordRepository = AppDataSource.getRepository(BorrowRecord);
 
       // Check if borrow record exists
       const borrowRecordData = await BorrowRecordRepository.findOne({
         where: {
           id: borrowRecordId,
         },
-      })
+      });
 
       if (!borrowRecordData?.id) {
         return [
@@ -57,7 +68,11 @@ class UpdateBorrowRecordService {
         ];
       }
 
-      if (!moment(borrowRecordData.borrowDate, 'YYYY-MM-DD').isBefore(moment(returnDate, 'YYYY-MM-DD'))) {
+      if (
+        !moment(borrowRecordData.borrowDate, 'YYYY-MM-DD').isBefore(
+          moment(returnDate, 'YYYY-MM-DD'),
+        )
+      ) {
         return [
           {
             errorType: INVALID_PARAMETER,
@@ -71,7 +86,7 @@ class UpdateBorrowRecordService {
         borrowDate: borrowRecordData.borrowDate,
         returnDate: returnDate ?? borrowRecordData.returnDate,
         borrower: borrowRecordData.borrower,
-        book: borrowRecordData.bookId
+        book: borrowRecordData.book,
       });
 
       return [

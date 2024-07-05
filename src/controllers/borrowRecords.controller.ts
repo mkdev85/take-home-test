@@ -60,7 +60,7 @@ class BorrowRecordController {
       service: UpdateBorrowRecordService,
       parameters: {
         borrowRecordId: request.params.borrowRecordId,
-        returnDate: request.body.returnDate
+        returnDate: request.body.returnDate,
       },
       response,
     });

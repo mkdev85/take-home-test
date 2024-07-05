@@ -41,6 +41,7 @@ class GetBookService {
             name: true,
             bio: true,
             birthdate: true,
+            id: true,
           },
         },
       });

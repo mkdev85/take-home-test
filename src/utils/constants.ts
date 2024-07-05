@@ -21,6 +21,9 @@ export const ASCENDING_ORDER_TYPE = 'ASC';
 
 export const INVALID_BORROW_RECORD_ID = 'Borrow Record Id is not valid';
 export const BORROW_RECORD_NOT_FOUND = 'Borrow Record not found';
-export const INVAID_BORROW_RECORD_RETURN_DATE =  'Borrow record return Date should be greater than borrow date.';
+export const INVAID_BORROW_RECORD_RETURN_DATE =
+  'Borrow record return Date should be greater than borrow date.';
 export const BORROW_RECORD_ALREADY_EXIST =
   'This book has already borrowed for the selected duration. Please try different duration.';
+export const INVALID_BORROW_RECORD_BORROW_DATE = 'Borrow date should be equal to current date.';
+export const INVALID_BORROW_RECORD_RETURN_DATE = 'Return date should be greater than current date.';

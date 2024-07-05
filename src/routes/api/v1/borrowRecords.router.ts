@@ -7,9 +7,11 @@ const borrowRecordRouter = express.Router(args);
 
 borrowRecordRouter.route('/').get(borrowRecordController.GetAllBorrowRecords);
 
+borrowRecordRouter.route('/').post(borrowRecordController.CreateBorrowRecord);
+
 borrowRecordRouter.route('/:borrowRecordId').get(borrowRecordController.GetBorrowRecord);
 
-borrowRecordRouter.route('/').post(borrowRecordController.CreateBorrowRecord);
+borrowRecordRouter.route('/:borrowRecordId').put(borrowRecordController.UpdateBorrowRecord);
 
 borrowRecordRouter.route('/:borrowRecordId').delete(borrowRecordController.DeleteBorrowRecord);
 

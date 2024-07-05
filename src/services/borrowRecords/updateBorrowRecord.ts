@@ -1,82 +1,91 @@
-// import Joi from 'joi';
+import Joi from 'joi';
+import moment from 'moment';
 
-// import { AppDataSource } from 'src/utils/data-source';
-// import { INTERNAL_SERVER_ERROR, INVALID_PARAMETER, BOOK_NOT_FOUND } from 'src/utils/constants';
-// import { fieldsValidator } from 'src/utils/methodHelper';
+import { AppDataSource } from 'src/utils/data-source';
+import { 
+  INTERNAL_SERVER_ERROR, 
+  INVALID_PARAMETER, 
+  INVALID_BORROW_RECORD_ID, 
+  BORROW_RECORD_NOT_FOUND, 
+  INVAID_BORROW_RECORD_RETURN_DATE 
+} from 'src/utils/constants';
+import { fieldsValidator } from 'src/utils/methodHelper';
 
-// import type { ServiceResponseReturnType } from 'src/types';
-// import { Book } from 'src/entities/books';
+import type { ServiceResponseReturnType } from 'src/types';
 
-// const UpdateBorrowRecordSchema = Joi.object({
-//   returnDate: Joi.date().format('YYYY-MM-DD').greater(Joi.ref('borrowDate')).required(),
-//   borrower: Joi.string().trim().required(),
-//   bookId: Joi.string().guid().message(INVALID_BOOK_ID).required(),
-// }).or('publishedYear', 'title', 'genre', 'availableCopies');
+const UpdateBorrowRecordSchema = Joi.object({
+  returnDate: Joi.date().format('YYYY-MM-DD'),
+  borrowRecordId: Joi.string().guid().message(INVALID_BORROW_RECORD_ID).required(),
+})
 
-// interface IUpdateBookServiceParams {
-//   publishedYear?: string;
-//   title?: string;
-//   genre?: string;
-//   bookId: string;
-//   availableCopies?: number;
-// }
+interface IUpdateBorrowRecordServiceParams {
+  returnDate?: string;
+  borrowRecordId: string;
+}
 
-// class UpdateBookService {
-//   static async run({
-//     publishedYear,
-//     title,
-//     genre,
-//     bookId,
-//     availableCopies,
-//   }: IUpdateBookServiceParams): ServiceResponseReturnType {
-//     try {
-//       // Validating parameters
-//       const errors = fieldsValidator({
-//         schema: UpdateBookSchema,
-//         fields: { publishedYear, title, genre, availableCopies },
-//       });
+class UpdateBorrowRecordService {
+  static async run({
+    returnDate,
+    borrowRecordId
+  }: IUpdateBorrowRecordServiceParams): ServiceResponseReturnType {
+    try {
+      // Validating parameters
+      const errors = fieldsValidator({
+        schema: UpdateBorrowRecordSchema,
+        fields: { returnDate, borrowRecordId },
+      });
 
-//       if (errors) {
-//         return [errors];
-//       }
+      if (errors) {
+        return [errors];
+      }
 
-//       const BookRepository = AppDataSource.getRepository(Book);
+      const BorrowRecordRepository = AppDataSource.getRepository(borrowRecordId);
 
-//       // Check if book exists
-//       const bookData = (await BookRepository.findOne({
-//         where: {
-//           id: bookId,
-//         },
-//       }))!;
+      // Check if borrow record exists
+      const borrowRecordData = await BorrowRecordRepository.findOne({
+        where: {
+          id: borrowRecordId,
+        },
+      })
 
-//       if (!bookData) {
-//         return [
-//           {
-//             errorType: INVALID_PARAMETER,
-//             message: BOOK_NOT_FOUND,
-//           },
-//         ];
-//       }
+      if (!borrowRecordData?.id) {
+        return [
+          {
+            errorType: INVALID_PARAMETER,
+            message: BORROW_RECORD_NOT_FOUND,
+          },
+        ];
+      }
 
-//       await BookRepository.save({
-//         id: bookId,
-//         title: title ?? bookData.title,
-//         genre: genre ?? bookData.genre,
-//         availableCopies: availableCopies ?? bookData.availableCopies,
-//       });
+      if (!moment(borrowRecordData.borrowDate, 'YYYY-MM-DD').isBefore(moment(returnDate, 'YYYY-MM-DD'))) {
+        return [
+          {
+            errorType: INVALID_PARAMETER,
+            message: INVAID_BORROW_RECORD_RETURN_DATE,
+          },
+        ];
+      }
 
-//       return [
-//         null,
-//         {
-//           data: { title, genre, availableCopies },
-//           message: `Book '${title}' has been successfully updated!`,
-//         },
-//       ];
-//     } catch (error) {
-//       console.log('Error while updating an book', error);
-//       return [{ errorType: INTERNAL_SERVER_ERROR }];
-//     }
-//   }
-// }
+      await BorrowRecordRepository.save({
+        id: borrowRecordData.id,
+        borrowDate: borrowRecordData.borrowDate,
+        returnDate: returnDate ?? borrowRecordData.returnDate,
+        borrower: borrowRecordData.borrower,
+        book: borrowRecordData.bookId
+      });
 
-// export default UpdateBookService;
+      return [
+        null,
+        {
+          data: { id: borrowRecordData.id, returnDate, borrowDate: borrowRecordData.borrowDate },
+          message: `Borrow Record has been successfully updated!`,
+        },
+      ];
+    } catch (error) {
+      console.log('Error while updating an borrow record', error);
+      return [{ errorType: INTERNAL_SERVER_ERROR }];
+    }
+  }
+}
+
+export default UpdateBorrowRecordService;

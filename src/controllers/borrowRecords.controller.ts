@@ -7,6 +7,7 @@ import CreateBorrowRecordService from 'src/services/borrowRecords/createBorrowRe
 import DeleteBorrowRecordService from 'src/services/borrowRecords/deleteBorrowrecord';
 import GetBorrowRecordService from 'src/services/borrowRecords/getBorrowRecord';
 import GetAllBorrowRecordsService from 'src/services/borrowRecords/getAllBorrowRecords';
+import UpdateBorrowRecordService from 'src/services/borrowRecords/updateBorrowRecord';
 
 class BorrowRecordController {
   static async GetBorrowRecord(request: CustomRequest, response: Response) {
@@ -49,6 +50,17 @@ class BorrowRecordController {
       service: DeleteBorrowRecordService,
       parameters: {
         borrowRecordId: request.params.borrowRecordId,
+      },
+      response,
+    });
+  }
+
+  static async UpdateBorrowRecord(request: CustomRequest, response: Response) {
+    sendResponse({
+      service: UpdateBorrowRecordService,
+      parameters: {
+        borrowRecordId: request.params.borrowRecordId,
+        returnDate: request.body.returnDate
       },
       response,
     });

@@ -2,11 +2,11 @@
 - Run `npm i` to install the dependencies.
 
 - Configure the following environment variables in .env file. 
- DB_USERNAME: Database username.
- DB_PASSWORD: Database password.
- DB_NAME: Database name.
- DB_HOST: Database host.
- DB_PORT: Database port.
+    -  DB_USERNAME: Database username.
+    -  DB_PASSWORD: Database password.
+    -  DB_NAME: Database name. [First need to create the database then add name here]
+    -  DB_HOST: Database host.
+    -  DB_PORT: Database port.    
 
 - After configuring the environment, run `npm run db:migrate` to run all migrations. This will set up the database including tables and relations.
 

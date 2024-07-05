@@ -9,7 +9,7 @@ import swaggerUi from 'swagger-ui-express';
 import initRoutes from './routes';
 
 import { AppDataSource } from './utils/data-source';
-import CreateUser from './seeders/createUser';
+// import CreateUser from './seeders/createUser';
 import swaggerFile from '../swagger_output.json';
 
 const app = express();
@@ -49,7 +49,8 @@ const startApp = async () => {
   await startDatabase();
 
   // Add Default user in database
-  await CreateUser();
+  // In Progress: Not covered
+  // await CreateUser();
 
   // Start Server
   startServer();

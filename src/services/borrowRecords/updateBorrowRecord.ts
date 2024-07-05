@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi from 'src/utils/joiDate';
 import moment from 'moment';
 
 import { AppDataSource } from 'src/utils/data-source';

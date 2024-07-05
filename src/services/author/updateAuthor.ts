@@ -42,11 +42,11 @@ class UpdateAuthorService {
       const AuthorRepository = AppDataSource.getRepository(Author);
 
       // Check if author exists
-      const authorData = (await AuthorRepository.findOne({
+      const authorData = await AuthorRepository.findOne({
         where: {
           id: authorId,
         },
-      }))!;
+      });
 
       if (!authorData) {
         return [

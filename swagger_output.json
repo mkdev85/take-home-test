@@ -13,37 +13,41 @@
   "paths": {
     "/api/v1/authors/": {
       "get": {
-        "description": "",
+        "description": "API for fetching all authors details.",
         "parameters": [
           {
             "name": "page_number",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "description": "Default value of this field is 1. It is used for pagination."
           },
           {
             "name": "page_size",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "description": "Default value of this field is 5. It is used for pagination."
           },
           {
             "name": "search_by_name",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "description": "This field is used for filtering the author record by name."
           },
           {
-            "name": "sort_by_Date",
+            "name": "sort_by_date",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "description": "This field is used for sorting the data as per creation date of record. Valid values for this field are 'ASC' and 'DESC.'"
           }
         ],
         "responses": {
           "default": {
-            "description": ""
+            "description": "All authors details."
           }
         }
       },
       "post": {
-        "description": "",
+        "description": "API for create the author.",
         "parameters": [
           {
             "name": "body",
@@ -52,13 +56,16 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Author Name."
                 },
                 "bio": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Author Bio."
                 },
                 "birthDate": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Author Birthdate. Format: YYYY-MM-DD"
                 }
               }
             }
@@ -66,36 +73,38 @@
         ],
         "responses": {
           "default": {
-            "description": ""
+            "description": "Author details."
           }
         }
       }
     },
     "/api/v1/authors/{authorId}": {
       "get": {
-        "description": "",
+        "description": "API for get author details.",
         "parameters": [
           {
             "name": "authorId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Author Id should be UUID format."
           }
         ],
         "responses": {
           "default": {
-            "description": ""
+            "description": "Author details."
           }
         }
       },
       "put": {
-        "description": "",
+        "description": "API for update an author details.",
         "parameters": [
           {
             "name": "authorId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Author Id should be UUID format."
           },
           {
             "name": "body",
@@ -104,13 +113,16 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Author Name."
                 },
                 "bio": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Author Bio."
                 },
                 "birthDate": {
-                  "example": "any"
+                  "example": "any",
+                   "description": "Author Birthdate. Format: YYYY-MM-DD"
                 }
               }
             }
@@ -118,75 +130,89 @@
         ],
         "responses": {
           "default": {
-            "description": ""
+            "description": "Author details."
           }
         }
       },
       "delete": {
-        "description": "",
+        "description": "API to delete the author record. All associated books records will also be deleted by deleting an author.",
         "parameters": [
           {
             "name": "authorId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Author Id should be UUID format."
           }
         ],
         "responses": {
           "default": {
-            "description": ""
+            "description": "Author details."
           }
         }
       }
     },
     "/api/v1/books/": {
       "get": {
-        "description": "",
+        "description": "API for fetching all books details.",
         "parameters": [
           {
             "name": "author_id",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "description": "Author id should be in UUID format."
           },
           {
             "name": "page_number",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "description": "Default value of this field is 1. It is used for pagination."
           },
           {
             "name": "page_size",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "description": "Default value of this field is 20. It is used for pagination."
           },
           {
             "name": "title",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "description": "This is optional field. This field is used for filtering the books data by book title."
           },
           {
             "name": "genre",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "description": "This is optional field. This field is used for filtering the books data by book genre."
           },
           {
             "name": "published_year",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "description": "This is optional field. This field is used for filtering the books data by book published year."
           },
           {
             "name": "sort_by_date",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "description": "This is optional field. This field is used for sorting the books records by creation date. Valid values for this fields are 'ASC' or 'DESC'."
+          },
+          {
+            "name": "sort_by_published_year",
+            "in": "query",
+            "type": "string",
+            "description": "This is optional field. This field is used for sorting the books records by book published year."
           }
         ],
         "responses": {
           "default": {
-            "description": ""
+            "description": "All Books detaills."
           }
         }
       },
       "post": {
-        "description": "",
+        "description": "Create a book.",
         "parameters": [
           {
             "name": "body",
@@ -195,19 +221,24 @@
               "type": "object",
               "properties": {
                 "publishedYear": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Book publish year. Format: YYYY"
                 },
                 "title": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Book title."
                 },
                 "genre": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Book genre"
                 },
                 "authorId": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Book author id. The value of this field should be in UUID format."
                 },
                 "availableCopies": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Book available copies. Format: Any non negative number."
                 }
               }
             }
@@ -215,36 +246,38 @@
         ],
         "responses": {
           "default": {
-            "description": ""
+            "description": "Book details"
           }
         }
       }
     },
     "/api/v1/books/{bookId}": {
       "get": {
-        "description": "",
+        "description": "API to fetch details of book",
         "parameters": [
           {
             "name": "bookId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Book Id, This field shoud be in UUID format"
           }
         ],
         "responses": {
           "default": {
-            "description": ""
+            "description": "Book details"
           }
         }
       },
       "put": {
-        "description": "",
+        "description": "API to update the book record",
         "parameters": [
           {
             "name": "bookId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "bookId, This field should be in UUID format."
           },
           {
             "name": "body",
@@ -253,16 +286,20 @@
               "type": "object",
               "properties": {
                 "publishedYear": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Book publish year. Format: YYYY"
                 },
                 "title": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Book title."
                 },
                 "genre": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Book genre"
                 },
                 "availableCopies": {
-                  "example": "any"
+                  "example": "any",
+                  "description": "Book available copies. Format: Any non negative number."
                 }
               }
             }
@@ -275,18 +312,150 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "API to delete the book. All associated borrow records will also be deleted by deleting an book.",
         "parameters": [
           {
             "name": "bookId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "book id, This field should be in UUID format."
           }
         ],
         "responses": {
           "default": {
-            "description": ""
+            "description": "Book record."
+          }
+        }
+      }
+    },
+    "/api/v1/borrow-records/": {
+      "get": {
+        "description": "API to fetch all borrow records.",
+        "parameters": [
+          {
+            "name": "page_number",
+            "in": "query",
+            "type": "string",
+            "description": "Default value of this field is 1. It is used for pagination."
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "type": "string",
+            "description": "Default value of this field is 20. It is used for pagination."
+          },
+          {
+            "name": "book_id",
+            "in": "query",
+            "type": "string",
+            "description": "Book Id, This field should be in UUID format."
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "All borrow records details."
+          }
+        }
+      },
+      "post": {
+        "description": "API to create the borrow record.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "returnDate": {
+                  "example": "any",
+                  "description": "Borrow Record return date, this field should be in YYYY-MM-DD format."
+                },
+                "borrowDate": {
+                  "example": "any",
+                  "description": "Borrow Record borrow date, this field should be in YYYY-MM-DD format."
+                },
+                "borrower": {
+                  "example": "any",
+                  "description": "Borrower name"
+                },
+                "bookId": {
+                  "example": "any",
+                  "description": "Book Id, This field should be in UUID format"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Borrow record data."
+          }
+        }
+      }
+    },
+    "/api/v1/borrow-records/{borrowRecordId}": {
+      "get": {
+        "description": "API to get borrow record details.",
+        "parameters": [
+          {
+            "name": "borrowRecordId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Borrow record Id, This field should be in UUID format."
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Borrow Record details"
+          }
+        }
+      },
+      "put": {
+        "description": "API to update the borrow record.",
+        "parameters": [
+          {
+            "name": "borrowRecordId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Borrow record Id, This field should be in UUID format."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "returnDate": {
+                  "example": "any",
+                  "description": "Borrow Record return date, this field should be in YYYY-MM-DD format."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Borrow Record details."
+          }
+        }
+      },
+      "delete": {
+        "description": "API to delete the borrow record",
+        "parameters": [
+          {
+            "name": "borrowRecordId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Borrow record Id, This field should be in UUID format."
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Borrow Record details."
           }
         }
       }

@@ -19,6 +19,9 @@ Swagger doc URL: http://localhost:3000/api-docs [host and port can be changed as
 
 This will show all the endpoints.
 
+## Configured linting and husky
+- To make code style more consistent and bug free, we have implemented husky with precommit hook. So everytime, when user push the code it would check the code styles. 
+
 ## Assumptions 
 - We have defined the author name as unique.
 - In the borrow record entity, the borrow date can't be greater than current date and same return date should be greater than the current date.

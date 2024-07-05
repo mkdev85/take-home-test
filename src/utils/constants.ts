@@ -2,6 +2,8 @@ export const INVALID_PARAMETER = 'INVALID_PARAMETER';
 export const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
 export const UNAUTHORIZED = 'UNAUTHORIZED';
 export const NOT_FOUND = 'NOT_FOUND';
+export const INVALID_EMAIL = 'Email is not valid';
+export const EMAIL_PASSWORD_NOT_FOUND = 'Email or Password is not valid!';
 export const BAD_DATA = 'BAD_DATA';
 export const SESSION_EXPIRED = 'Session expired! Please login and try again.';
 

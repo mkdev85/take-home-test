@@ -5,12 +5,12 @@ import morgan from 'morgan';
 import cors from 'cors';
 
 import swaggerUi from 'swagger-ui-express';
-const swaggerFile = require('../swagger_output.json');
 
 import initRoutes from './routes';
 
 import { AppDataSource } from './utils/data-source';
 import CreateUser from './seeders/createUser';
+import swaggerFile from '../swagger_output.json';
 
 const app = express();
 const PORT = process.env.APP_PORT;

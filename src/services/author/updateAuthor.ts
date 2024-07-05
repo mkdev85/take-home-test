@@ -68,7 +68,7 @@ class UpdateAuthorService {
         null,
         {
           data: { birthDate, bio, name },
-          message: `Author '${name || authorData.name}' has been successfully updated!`,
+          message: `Author '${name ?? authorData.name}' has been successfully updated!`,
         },
       ];
     } catch (error) {

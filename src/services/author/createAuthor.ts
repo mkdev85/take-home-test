@@ -1,17 +1,17 @@
 import { ILike } from 'typeorm';
-import Joi from 'src/utils/joiDate';
 
 import { Author } from 'src/entities/authors';
 
+import Joi from 'src/utils/joiDate';
 import { AppDataSource } from 'src/utils/data-source';
 import {
   INTERNAL_SERVER_ERROR,
   AUTHOR_NAME_ALREADY_EXIST,
   INVALID_PARAMETER,
 } from 'src/utils/constants';
+import { fieldsValidator } from 'src/utils/methodHelper';
 
 import type { ServiceResponseReturnType } from 'src/types';
-import { fieldsValidator } from 'src/utils/methodHelper';
 
 const CreateAuthorSchema = Joi.object({
   birthDate: Joi.date().format('YYYY-MM-DD').raw().required(),
@@ -50,7 +50,7 @@ class CreateAuthorService {
         },
       });
 
-      if (authorData && authorData.name) {
+      if (!authorData?.id) {
         return [
           {
             errorType: INVALID_PARAMETER,

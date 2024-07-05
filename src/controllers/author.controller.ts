@@ -11,14 +11,13 @@ import { sendResponse } from 'src/utils/responseHandler';
 import type { CustomRequest } from 'src/types';
 
 class AuthorsController {
-  static async GetAllAuthors(request: CustomRequest, response: Response) {
+  static async CreateAuthor(request: CustomRequest, response: Response) {
     sendResponse({
-      service: GetAllAuthorsService,
+      service: CreateAuthorService,
       parameters: {
-        pageNumber: Number(request.query.page_number) || 1,
-        pageSize: Number(request.query.page_size) || 20,
-        searchByName: request.query.search_by_name,
-        sortByDate: request.query.sort_by_date,
+        name: request.body.name,
+        bio: request.body.bio,
+        birthDate: request.body.birthDate,
       },
       response,
     });
@@ -34,23 +33,14 @@ class AuthorsController {
     });
   }
 
-  static async CreateAuthor(request: CustomRequest, response: Response) {
+  static async GetAllAuthors(request: CustomRequest, response: Response) {
     sendResponse({
-      service: CreateAuthorService,
+      service: GetAllAuthorsService,
       parameters: {
-        name: request.body.name,
-        bio: request.body.bio,
-        birthDate: request.body.birthDate,
-      },
-      response,
-    });
-  }
-
-  static async DeleteAuthor(request: CustomRequest, response: Response) {
-    sendResponse({
-      service: DeleteAuthorService,
-      parameters: {
-        authorId: request.params.authorId,
+        pageNumber: Number(request.query.page_number) || 1,
+        pageSize: Number(request.query.page_size) || 20,
+        searchByName: request.query.search_by_name,
+        sortByDate: request.query.sort_by_date,
       },
       response,
     });
@@ -64,6 +54,16 @@ class AuthorsController {
         name: request.body.name,
         bio: request.body.bio,
         birthDate: request.body.birthDate,
+      },
+      response,
+    });
+  }
+
+  static async DeleteAuthor(request: CustomRequest, response: Response) {
+    sendResponse({
+      service: DeleteAuthorService,
+      parameters: {
+        authorId: request.params.authorId,
       },
       response,
     });

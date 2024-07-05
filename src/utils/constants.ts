@@ -3,6 +3,7 @@ export const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
 export const UNAUTHORIZED = 'UNAUTHORIZED';
 export const NOT_FOUND = 'NOT_FOUND';
 export const BAD_DATA = 'BAD_DATA';
+export const SESSION_EXPIRED = 'Session expired! Please login and try again.';
 
 export const INVALID_USER = 'Invalid User!';
 export const UNAUTHORIZED_USER_MESSAGE = 'You are not authorized!';

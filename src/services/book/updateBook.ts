@@ -71,7 +71,7 @@ class UpdateBookService {
         null,
         {
           data: { title, genre, availableCopies, publishedYear },
-          message: `Book '${title || bookData.title}' has been successfully updated!`,
+          message: `Book '${title ?? bookData.title}' has been successfully updated!`,
         },
       ];
     } catch (error) {
